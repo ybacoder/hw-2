@@ -21,8 +21,8 @@ import csv
 
 in_file_path = os.path.join("Resources", "budget_data.csv")
 
-date = []
-profit = []
+# date = [] # commented out because no longer needed for more efficient solution
+# profit = []
 with open(in_file_path, 'r') as in_file:
     # This was my previous, less efficient solution.
     # header = in_file.readline()
