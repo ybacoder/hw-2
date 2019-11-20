@@ -17,23 +17,27 @@ In addition, your final script should both print the analysis to the terminal an
 """
 
 import os
+import csv
 
-file_path = os.path.join("Resources", "budget_data.csv")
+in_file_path = os.path.join("Resources", "budget_data.csv")
 
 date = []
 profit = []
-with open(file_path, 'r') as file_in:
-    header = file_in.readline()
-    for line in file_in:
-        line = line.split(',')
-        date.append(line[0])
-        profit.append(int(line[1]))
+with open(in_file_path, 'r') as in_file:
+    # This was my previous, less efficient solution.
+    # header = in_file.readline()
+    # for line in in_file:
+    #     line = line.split(',')
+    #     date.append(line[0])
+    #     profit.append(int(line[1]))
+    csv_reader = csv.DictReader(in_file)
+    data = list(csv_reader)
+    date = [date["Date"] for date in data]
+    profit = [int(p["Profit/Losses"]) for p in data]
 
 total_months = len(date)
-
 total_profit = sum(profit)
 
-profit_df_date = date[1:]
 profit_df = [profit_current - profit_prev for profit_current, profit_prev in zip(profit[1:], profit[:-1])]
 average_profit_df = sum(profit_df) / len(profit_df)
 
@@ -44,9 +48,28 @@ min_profit_df = min(profit_df)
 min_profit_df_index = profit_df.index(min_profit_df)
 min_profit_date = date[min_profit_df_index + 1]
 
-print("Financial Analysis\n-------------------------------")
-print("Total Months: ", total_months)
-print("Total: ${:,.0f}".format(total_profit))
-print("Average Change: ${:,.2f}".format(average_profit_df))
-print("Greatest Increase in Profits: {} ${:,.0f}".format(max_profit_date, max_profit_df))
-print("Greatest Decrease in Profits: {} ${:,.0f}".format(min_profit_date, min_profit_df))
+with open("financial_analysis_output.md", 'w') as out_file:
+    # Output all analysis results to terminal and to out_file
+    head = "Financial Analysis\n-------------------------------" 
+    print(head)
+    out_file.write(head + "\n")
+
+    total_months_print = "Total Months: " + str(total_months)
+    print(total_months_print)
+    out_file.write(total_months_print + "\n")
+
+    total_profit_print = "Total: ${:,.0f}".format(total_profit)
+    print(total_profit_print)
+    out_file.write(total_profit_print + "\n")
+
+    average_profit_df_print = "Average Change: ${:,.2f}".format(average_profit_df)
+    print(average_profit_df_print)
+    out_file.write(average_profit_df_print + "\n")
+
+    greatest_profit_increase_print = "Greatest Increase in Profits: {} ${:,.0f}".format(max_profit_date, max_profit_df)
+    print(greatest_profit_increase_print)
+    out_file.write(greatest_profit_increase_print + "\n")
+
+    greatest_profit_decrease_print = "Greatest Decrease in Profits: {} ${:,.0f}".format(min_profit_date, min_profit_df)
+    print(greatest_profit_decrease_print)
+    out_file.write(greatest_profit_decrease_print)
