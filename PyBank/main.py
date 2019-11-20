@@ -32,12 +32,14 @@ with open(in_file_path, 'r') as in_file:
     #     profit.append(int(line[1]))
     csv_reader = csv.DictReader(in_file)
     data = list(csv_reader)
+    # extract the date and profit data into separate lists
     date = [date["Date"] for date in data]
     profit = [int(p["Profit/Losses"]) for p in data]
 
 total_months = len(date)
 total_profit = sum(profit)
 
+# zip together the profit list offset by one index (exclude first value) with the profit list (exclude last value), then calculate profit difference for each index
 profit_df = [profit_current - profit_prev for profit_current, profit_prev in zip(profit[1:], profit[:-1])]
 average_profit_df = sum(profit_df) / len(profit_df)
 
