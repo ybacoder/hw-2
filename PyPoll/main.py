@@ -49,5 +49,12 @@ with open(in_file_path, 'r') as in_file:
     candidate_percent_votes = {each_candidate : candidate_votes[each_candidate] / total_votes for each_candidate in candidate_list}
     winner = max(candidate_votes, key=candidate_votes.get)
 
-# with open("financial_analysis_output.md", 'w') as out_file:
+with open("financial_analysis_output.md", 'w') as out_file:
     # Output all analysis results to terminal and to out_file
+    head = "Election Results\n-------------------------------" 
+    print(head)
+    out_file.write(head + "\n")
+
+    # total_months_print = "Total Months: " + str(total_months)
+    # print(total_months_print)
+    # out_file.write(total_months_print + "\n")
