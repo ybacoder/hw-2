@@ -43,6 +43,11 @@ with open(in_file_path, 'r') as in_file:
     # county = [row[1] for row in line]
     # candidate = [row[2] for row in line]
 
+    total_votes = len(voter_id)
+    candidate_list = list(set(candidate))
+    candidate_votes = {each_candidate : candidate.count(each_candidate) for each_candidate in candidate_list}
+    candidate_percent_votes = {each_candidate : candidate_votes[each_candidate] / total_votes for each_candidate in candidate_list}
+    winner = max(candidate_votes, key=candidate_votes.get)
 
 # with open("financial_analysis_output.md", 'w') as out_file:
     # Output all analysis results to terminal and to out_file
