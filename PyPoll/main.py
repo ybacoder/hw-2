@@ -22,14 +22,27 @@ In addition, your final script should both print the analysis to the terminal an
 
 import os
 import csv
+import time
 
 in_file_path = os.path.join("Resources", "election_data.csv")
 
 with open(in_file_path, 'r') as in_file:
-    csv_reader = csv.DictReader(in_file)
-    csv_reader = list(csv_reader)
-    print(csv_reader)
-    # voter_id, county, candidate = [(int(line["Voter ID"]), line["County"], line["Candidate"]) for line in csv_reader]
-    # county = [line["County"] for line in csv_reader]
-    # candidate = [line["Candidate"] for line in csv_reader]
-    # print(voter_id[0])
+    csv_reader = csv.reader(in_file)
+    header = next(csv_reader)
+    line = [[line[0], line[1], line[2]] for line in csv_reader]
+    
+    voter_id = [row[0] for row in line]
+    county = [row[1] for row in line]
+    candidate = [row[2] for row in line]
+        
+    # Solution using DictReader
+    # csv_reader = csv.DictReader(in_file)
+    # csv_reader = list(csv_reader)
+    # line = [[int(line["Voter ID"]), line["County"], line["Candidate"]] for line in csv_reader]
+    # voter_id = [row[0] for row in line]
+    # county = [row[1] for row in line]
+    # candidate = [row[2] for row in line]
+
+
+# with open("financial_analysis_output.md", 'w') as out_file:
+    # Output all analysis results to terminal and to out_file
