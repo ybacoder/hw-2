@@ -58,19 +58,19 @@ with open("financial_analysis_output.md", 'w') as out_file:
 
     total_months_print = "Total Months: " + str(total_months)
     print(total_months_print)
-    out_file.write(total_months_print + "\n")
+    out_file.write(total_months_print + "  \n")
 
     total_profit_print = "Total: ${:,.0f}".format(total_profit)
     print(total_profit_print)
-    out_file.write(total_profit_print + "\n")
+    out_file.write(total_profit_print + "  \n")
 
     average_profit_df_print = "Average Change: ${:,.2f}".format(average_profit_df)
     print(average_profit_df_print)
-    out_file.write(average_profit_df_print + "\n")
+    out_file.write(average_profit_df_print + "  \n")
 
     greatest_profit_increase_print = "Greatest Increase in Profits: {} ${:,.0f}".format(max_profit_date, max_profit_df)
     print(greatest_profit_increase_print)
-    out_file.write(greatest_profit_increase_print + "\n")
+    out_file.write(greatest_profit_increase_print + "  \n")
 
     greatest_profit_decrease_print = "Greatest Decrease in Profits: {} ${:,.0f}".format(min_profit_date, min_profit_df)
     print(greatest_profit_decrease_print)
