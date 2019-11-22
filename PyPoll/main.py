@@ -83,7 +83,7 @@ with open("election_results.md", 'w') as out_file:
         sorted_candidate_print = "{}: {:.3f}% ({:,.0f} votes)"\
             .format(each_candidate, candidate_percent_votes[each_candidate], candidate_votes[each_candidate])
         print(sorted_candidate_print)
-        out_file.write(sorted_candidate_print + "\n")
+        out_file.write(sorted_candidate_print + "  \n")
     
     if potential_fraud:
         potential_fraud_print = "\nNo duplicate-voter fraud detected."

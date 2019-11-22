@@ -2,10 +2,10 @@ Election Results
 -------------------------------
 Total Votes: 3,521,001
 -------------------------------
-Khan: 63.000% (2,218,231 votes)
-Correy: 20.000% (704,200 votes)
-Li: 14.000% (492,940 votes)
-O'Tooley: 3.000% (105,630 votes)
+Khan: 63.000% (2,218,231 votes)  
+Correy: 20.000% (704,200 votes)  
+Li: 14.000% (492,940 votes)  
+O'Tooley: 3.000% (105,630 votes)  
 
 No duplicate-voter fraud detected.
 -------------------------------
