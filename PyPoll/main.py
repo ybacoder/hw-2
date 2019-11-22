@@ -44,17 +44,39 @@ with open(in_file_path, 'r') as in_file:
     # candidate = [row[2] for row in line]
 
     total_votes = len(voter_id)
-    candidate_list = list(set(candidate))
+    candidate_list = list(set(candidate)) # find the unique candidates
+    # create a dict of candidates and their corresponding number of votes
     candidate_votes = {each_candidate : candidate.count(each_candidate) for each_candidate in candidate_list}
-    candidate_percent_votes = {each_candidate : candidate_votes[each_candidate] / total_votes for each_candidate in candidate_list}
-    winner = max(candidate_votes, key=candidate_votes.get)
+    # create a dict of candidates and their corresponding percent of votes
+    candidate_percent_votes = {each_candidate : candidate_votes[each_candidate] / total_votes * 100 for each_candidate in candidate_list}
+    
+    # this block of code finds the ordered list of candidates by number of votes
+    sorted_candidates = []
+    candidate_votes_copy = candidate_votes.copy() # need a copy to avoid destroying the dict of candidates : votes
+    for i in candidate_list: # arbitrary for loop
+        # append the candidate with the most votes to a list
+        sorted_candidates.append(max(candidate_votes_copy, key=candidate_votes.get))
+        # pop the the candiates with the most votes from the dict
+        candidate_votes_copy.pop(sorted_candidates[-1])
+    winner = sorted_candidates[0]
 
-with open("financial_analysis_output.md", 'w') as out_file:
+with open("election_results.md", 'w') as out_file:
     # Output all analysis results to terminal and to out_file
-    head = "Election Results\n-------------------------------" 
-    print(head)
-    out_file.write(head + "\n")
+    head = "Election Results"
+    separator = "\n-------------------------------"
+    print(head + separator)
+    out_file.write(head + separator + "\n")
 
-    # total_months_print = "Total Months: " + str(total_months)
-    # print(total_months_print)
-    # out_file.write(total_months_print + "\n")
+    total_votes_print = "Total Votes: {:,.0f}".format(total_votes)
+    print(total_votes_print + separator)
+    out_file.write(total_votes_print + separator + "\n")
+
+    for each_candidate in sorted_candidates:
+        sorted_candidate_print = "{}: {:.3f}% ({:,.0f} votes)".\
+            format(each_candidate, candidate_percent_votes[each_candidate], candidate_votes[each_candidate])
+        print(sorted_candidate_print)
+        out_file.write(sorted_candidate_print + "\n")
+    
+    winner_print = "\nWinner: {}".format(winner)
+    print(separator + winner_print + separator)
+    out_file.write(separator + winner_print + separator)
