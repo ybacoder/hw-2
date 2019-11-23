@@ -28,7 +28,7 @@ in_file_path = os.path.join("Resources", "election_data.csv")
 with open(in_file_path, 'r') as in_file:
     csv_reader = csv.reader(in_file)
     header = next(csv_reader)
-    line = [[line[0], line[1], line[2]] for line in csv_reader]
+    line = [line for line in csv_reader]
     
 voter_id = [row[0] for row in line]
 # voter_id.append(voter_id[1]) # test code for duplicate voter fraud
