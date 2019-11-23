@@ -32,10 +32,26 @@ https://gist.github.com/afhaque/29f0f4f37463c447770517a6c17d08f5
 
 import os
 import csv
-from us_state_abbrev import us_state_abbrev
+from us_state_abbrev import us_state_abbrev # code from afhaque
 
 in_file_path = os.path.join("employee_data.csv")
 
 with open(in_file_path, 'r') as in_file:
-    for line in in_file:
-        print(line)
+    csv_reader = csv.reader(in_file)
+    header_in = next(csv_reader)
+    employee_data_in = [line for line in csv_reader]
+print(employee_data_in[-1][1].split(" "))
+
+# create new header list and replace name with first/last name
+header_out = header_in.copy()
+header_out.insert(2, "Last Name")
+header_out.insert(2, "First Name")
+header_out.pop(header_in.index("Name"))
+print(header_in)
+print(header_out)
+
+# create new list with the required parameters
+employee_data_out = [[(employee[0])] + employee[1].split(" ") for employee in employee_data_in]
+for name in employee_data_out:
+    print(name)
+
