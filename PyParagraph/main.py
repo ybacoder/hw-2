@@ -41,30 +41,50 @@ import os
 import re
 import csv
 
-paragraph1_path = os.path.join("raw_data", "paragraph_1.txt")
-paragraph2_path = os.path.join("raw_data", "paragraph_2.txt")
-paragraph3_path = os.path.join("raw_data", "paragraph_3.txt")
+paragraph_num = "2"
+paragraph_path = os.path.join("raw_data", "paragraph_" + paragraph_num + ".txt")
+
 
 # import the paragraph into a variable
-# with open(paragraph1_path, 'r') as in_file:
-# with open(paragraph2_path, 'r') as in_file:
-with open(paragraph3_path, 'r') as in_file:
+with open(paragraph_path, 'r') as in_file:
     paragraph = in_file.read()
-print(paragraph + "\n")
 
 # split the paragraph into sentences using the code from the prompt
 sentences = re.split("(?<=[.!?]) +", paragraph)
-print(sentences)
-print("\n")
+approx_sentences_count = len(sentences)
 
 # split the sentences into words after removing all punctuation
 words = "".join([char for char in paragraph if char not in ["\"", "\'", "(", "?", "<", "=", "[", ".", "!", "?", "]", ")", "+", ",", "\\"]])
 words_list = words.split(" ")
-print(len(words_list))
+approx_words_count = len(words_list)
 
-with open("paragraph_analysis.md", 'w') as out_file:
+# split the words into characters and calculate average letter count
+characters_only = words.replace(" ", "")
+characters_count = len(characters_only)
+avg_letter_count = characters_count / approx_words_count
+
+# calculate average sentence length (i.e., words per sentence)
+avg_sentence_length = approx_words_count / approx_sentences_count
+
+with open("paragraph_" + paragraph_num + "_analysis.md", 'w') as out_file:
     # Output all analysis results to terminal and to out_file
     head = "Paragraph Analysis"
     separator = "\n-------------------------------"
     print(head + separator)
     out_file.write(head + separator + "\n")
+
+    approx_words_count_print = f"Approximate Word Count: {approx_words_count}"
+    print(approx_words_count_print)
+    out_file.write(approx_words_count_print + "\n")
+
+    approx_sentences_count_print = f"Approximate Sentence Count: {approx_sentences_count}"
+    print(approx_sentences_count_print)
+    out_file.write(approx_sentences_count_print + "\n")    
+    
+    avg_letter_count_print = f"Average Letter Count (i.e., letters per word): {avg_letter_count:.2f}"
+    print(avg_letter_count_print)
+    out_file.write(avg_letter_count_print + "\n")
+    
+    avg_sentence_length_print = f"Average Sentence Length (i.e., words per sentence): {avg_sentence_length:.1f}"
+    print(avg_sentence_length_print)
+    out_file.write(avg_sentence_length_print + "\n")
