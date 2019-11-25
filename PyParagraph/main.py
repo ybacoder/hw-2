@@ -30,9 +30,41 @@ Approximate Word Count: 122
 Approximate Sentence Count: 5
 Average Letter Count: 4.6
 Average Sentence Length: 24.0
+
+Special Hint: You may find this code snippet helpful when determining sentence length (look into regular expressions if interested in learning more):
+https://en.wikipedia.org/wiki/Regular_expression
+import re
+re.split("(?<=[.!?]) +", paragraph)
 """
 
 import os
 import re
 import csv
 
+paragraph1_path = os.path.join("raw_data", "paragraph_1.txt")
+paragraph2_path = os.path.join("raw_data", "paragraph_2.txt")
+paragraph3_path = os.path.join("raw_data", "paragraph_3.txt")
+
+# import the paragraph into a variable
+# with open(paragraph1_path, 'r') as in_file:
+# with open(paragraph2_path, 'r') as in_file:
+with open(paragraph3_path, 'r') as in_file:
+    paragraph = in_file.read()
+print(paragraph + "\n")
+
+# split the paragraph into sentences using the code from the prompt
+sentences = re.split("(?<=[.!?]) +", paragraph)
+print(sentences)
+print("\n")
+
+# split the sentences into words after removing all punctuation
+words = "".join([char for char in paragraph if char not in ["\"", "\'", "(", "?", "<", "=", "[", ".", "!", "?", "]", ")", "+", ",", "\\"]])
+words_list = words.split(" ")
+print(len(words_list))
+
+with open("paragraph_analysis.md", 'w') as out_file:
+    # Output all analysis results to terminal and to out_file
+    head = "Paragraph Analysis"
+    separator = "\n-------------------------------"
+    print(head + separator)
+    out_file.write(head + separator + "\n")
