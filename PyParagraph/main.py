@@ -41,7 +41,7 @@ import os
 import re
 import csv
 
-paragraph_num = "2"
+paragraph_num = input("Input Paragraph Number to Analyze: ")
 paragraph_path = os.path.join("raw_data", "paragraph_" + paragraph_num + ".txt")
 
 
@@ -50,12 +50,13 @@ with open(paragraph_path, 'r') as in_file:
     paragraph = in_file.read()
 
 # split the paragraph into sentences using the code from the prompt
-sentences = re.split("(?<=[.!?]) +", paragraph)
-approx_sentences_count = len(sentences)
+sentences = re.split("(?<=[.!?])+", paragraph)
+# calculate number of sentences by subtracting 1 from the length because the regex expression has empty string at end and overcounts by 1
+approx_sentences_count = len(sentences) - 1
 
 # split the sentences into words after removing all punctuation
 words = "".join([char for char in paragraph if char not in ["\"", "\'", "(", "?", "<", "=", "[", ".", "!", "?", "]", ")", "+", ",", "\\"]])
-words_list = words.split(" ")
+words_list = words.replace("\n", " ").replace("  ", " ").split(" ")
 approx_words_count = len(words_list)
 
 # split the words into characters and calculate average letter count
