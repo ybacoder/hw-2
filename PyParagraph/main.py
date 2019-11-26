@@ -41,7 +41,9 @@ import os
 import re
 import csv
 
-paragraph_num = input("Input Paragraph Number to Analyze: ")
+paragraph_num = 0
+while paragraph_num not in ['1', '2', '3']:
+    paragraph_num = input("Input Paragraph Number to Analyze (1, 2, or 3): ")
 paragraph_path = os.path.join("raw_data", "paragraph_" + paragraph_num + ".txt")
 
 
